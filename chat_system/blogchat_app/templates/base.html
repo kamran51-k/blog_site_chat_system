@@ -1,0 +1,105 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <div class="container-fluid">
+    <main class="tm-main">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <!-- Search form -->
+        <div class="row tm-row">
+            <div class="col-12">
+                <form  action = "{% url 'searchbar' %}" method="GET" class="form-inline tm-mb-80 tm-search-form">                
+                    <input class="form-control tm-search-input" name="search" type="text" placeholder="Search..." aria-label="Search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </div>                
+        </div>    
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Xtra Blog</title>
+	<link rel="stylesheet" href="{% static 'chat_asserts/fontawesome/css/all.min.css'%}"> <!-- https://fontawesome.com/ -->
+	<link href="{% static 'chat_asserts/https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap' %}" rel="stylesheet"> <!-- https://fonts.google.com/ -->
+    <link href="{% static 'chat_asserts/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'chat_asserts/css/templatemo-xtra-blog.css'%}" rel="stylesheet">
+<!--
+    
+TemplateMo 553 Xtra Blog
+
+https://templatemo.com/tm-553-xtra-blog
+
+-->
+{%block content%} {%endblock%}
+</head>
+<body>
+	<header class="tm-header" id="tm-header">
+        <div class="tm-header-wrapper">
+            <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            {% if user.is_authenticated %}
+            <div class="tm-site-header">
+                <div class="mb-3 mx-auto tm-site-logo"><i class="fas fa-times fa-2x"></i> <img src="https://www.pngitem.com/pimgs/m/514-5149286_profile-logo-hd-png-download.png" width="100" weight='100'></div>            
+                <h1 class="text-center"><a class="nav-link" href="#">Welcome, {{user.username}}</a></h1>
+                
+            </div>
+            <nav class="tm-nav" id="tm-nav">   
+            {% endif %}         
+                <ul>
+                    {% if user.is_authenticated %}
+                    {% for n in base_queryset %}
+                        <li class="tm-nav-item"><a href="{{ n.url }}" class="tm-nav-link">
+                            <i class="{{n.navbar_logo}}"></i>
+                            {{ n.name }}
+                        </a></li>
+                    {% endfor %}
+                      {% else %}
+                      <div class="mb-3 mx-auto tm-site-logo"><i class="fas fa-times fa-2x"></i> <img src="https://www.pngitem.com/pimgs/m/514-5149286_profile-logo-hd-png-download.png" width="100" weight='100'></div> 
+                      <h1 class="text-center"><a class="nav-link" href="#">Please Login or Register</a></h1>
+                    <li class="tm-nav-item"><a href="{%url 'login_page' %}" class="tm-nav-link">
+                        <i class="far fa-comments"></i>
+                        Login
+                    </a></li>
+                    <li class="tm-nav-item"><a href="{% url 'register_page' %}" class="tm-nav-link">
+                        <i class="far fa-comments"></i>
+                        Register
+                    </a></li>
+                    {%endif%}
+                </ul>
+            </nav>
+            <div class="tm-mb-65">
+                {% for f in logo_queryset %}
+                <!-- <a rel="nofollow" href="" class="tm-social-link">
+                    <i class="fab fa-facebook tm-social-icon"></i> -->
+                                <li class="list-inline-item">
+                                    <a href="{{f.logo_url}}">
+                                        <span class="fa-stack fa-lg">
+                                            <img width="40px" height="40px" src="{{ f.logo_image.url }}">
+                                        </span>
+                                    </a>
+                                </li>
+                <!-- </a> -->
+                {% endfor%}
+
+                {% for i in contact_queryset_two %}
+                <div class="" style="margin-top: 22px;">
+                    <address class="mb-4 tm-color-gray">
+                        <a href="{{i.adreessurl}}" class="text-white">{{i.adreess}}</a>
+                    </address>
+                    <span class="d-block">
+                        
+                        <a  href="tel:077-640-0708" class="text-white">Tel: +994 {{i.phone_number}}</a>
+                    </span>
+                    <span class="mb-4 d-block">
+                        
+                        <a href="mailto:{{i.email.url}}" class="text-white"> Email: {{i.email}}</a>
+                    </span>
+                {%endfor%}
+        </div>
+    </header>
+
+</main>
+</div>
+<script src="{% static 'chat_asserts/js/jquery.min.js'%}"></script>
+<script src="{% static 'chat_asserts/js/templatemo-script.js'%}"></script>
+</body>

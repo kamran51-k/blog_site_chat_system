@@ -1,0 +1,12 @@
+{%extends 'base.html' %}
+{% load static %}
+{%block content%}
+
+        <h1>Archive</h1>
+        {%for i in archives%}
+         
+        <a href="{% url 'detail_page' post_id=i.id %}">
+        <i>Post Date - {{i.date}} / Post title - {{i.title}} </i> <br></a>
+        </html>
+        {%endfor%}
+{%endblock%}

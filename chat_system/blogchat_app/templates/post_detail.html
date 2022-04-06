@@ -1,0 +1,103 @@
+{%extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{%block content%}
+<head>
+<script>
+    $('a.showReply').on("click", function(e){ 
+
+        $('#replymsgbox').slideToggle('fast')
+     
+     });    
+    </script>
+</head>
+
+            <div class="row tm-row">
+                <div class="col-12">
+                    <hr class="tm-hr-primary tm-mb-55">
+                    <!-- Video player 1422x800 -->
+                    <img src="{{detail_queryset.image.url}}" alt="" width="954" height="535">
+                </div>
+            </div>
+            <div class="row tm-row">
+                <div class="col-lg-8 tm-post-col">
+                    <div class="tm-post-full">                    
+                        <div class="mb-4">
+                            <h2 class="pt-2 tm-color-primary tm-post-title">{{detail_queryset.title}}</h2>
+                            <p class="tm-mb-40">{{detail_queryset.date}} posted by {{detail_queryset.username}}</p>
+                            <img src="" alt="">
+                            <p>
+                                {{detail_queryset.text}}
+                                 </p>
+                            
+                            <span class="d-block text-right tm-color-primary">{{detail_queryset.category}}</span>
+                        </div>
+                        <!-- Comments -->
+                        <div>
+                            <h2 class="tm-color-primary tm-post-title">Comments</h2>
+                            <hr class="tm-hr-primary tm-mb-45">
+                            {%for comment in comment_queryset%}
+                            <blockquote>
+                                {%if comment.reply_to.id == None%}
+                            <div class="tm-comment tm-mb-45">
+                                <figure class="tm-comment-figure">
+                                    <img src="img/comment-1.jpg" alt="Image" class="mb-2 rounded-circle img-thumbnail">
+                                    <figcaption class="tm-color-primary text-center">{{comment.user.username}}</figcaption>
+                                </figure>
+                                <div>
+                                    <p>
+                                        {{comment.content}}
+                                    </p>
+                                        <div class="row">
+                                            
+                                            <form action=""method='post'>
+                                                {%csrf_token%}
+                                                {{form.as_p}}
+                                               <input type="hidden" name="reply_to_id" value="{{comment.id}}">
+                                              <button  class='primaryContained float-right' type="submit">Reply</button>
+                                            </form>
+                                        <a href="#"><span class="tm-color-primary">{{comment.created}}</span></a>
+                                    </div>                                                 
+                                </div>                                
+                            </div>
+                            {%endif%}
+                        </blockquote>
+                            {%for reply in comment.replies.all%}
+                            <div class="tm-comment-reply tm-mb-45">
+                                <hr>
+                                <div class="tm-comment">
+                                    <figure class="tm-comment-figure">
+                                        <img src="img/comment-2.jpg" alt="Image" class="mb-2 rounded-circle img-thumbnail">
+                                        <figcaption class="tm-color-primary text-center">{{reply.user.username}}</figcaption>    
+                                    </figure>
+                                    </p>
+                                        {{reply.content}}
+                                    </p>
+                                </div>                                
+                                <span class="d-block text-right tm-color-primary">{{reply.created}}</span>
+                            </div>
+                            {%endfor%}
+                            {%endfor%}
+                            <form action="" method="post" class="mb-5 tm-comment-form">
+                                <h2 class="tm-color-primary tm-post-title mb-4">Your comment</h2>
+                                {% csrf_token  %}
+                                {{form}}
+                                <div class="text-right">
+                                    <button class="tm-btn tm-btn-primary tm-btn-small">Submit</button>                        
+                                </div>                                
+                            </form>                          
+                        </div>
+                    </div>
+                </div>
+              
+                <aside class="col-lg-4 tm-aside-col">
+                    
+                </aside>
+            </div>
+            </main>
+            </div>
+            <script src="{% static 'chat_asserts/js/jquery.min.js'%}"></script>
+            <script src="{% static 'chat_asserts/js/templatemo-script.js'%}"></script>
+            </body>
+            {%endblock%}

@@ -1,0 +1,58 @@
+{%extends 'base.html' %}
+{% load static %}
+{%block content%}
+
+    
+</head>
+<body>
+        {% for n in about_queryset %}            
+            <div class="row tm-row tm-mb-45">
+                <div class="col-12">
+                    <hr class="tm-hr-primary tm-mb-55">
+                    <img src="{{ n.headimage.url }}" alt="Image" class="img-fluid">
+                </div>
+            </div> 
+            <div class="row tm-row tm-mb-40">
+                <div class="col-12">                    
+                    <div class="mb-4">
+                        <h2 class="pt-2 tm-mb-40 tm-color-primary tm-post-title">{{ n.title }}</h2>
+                        <p>
+                            {{ n.text }}
+                        </p>                            
+                    </div>                    
+                </div>
+            </div>
+                       
+            <div class="row tm-row tm-mb-60">
+                <div class="col-12">
+                    <hr class="tm-hr-primary  tm-mb-55">
+                </div>              
+                <div class="col-lg-6 tm-mb-60 tm-person-col">
+                    <div class="media tm-person">
+                        <img src="{{n.ownimage.url}}" alt="Image" class="img-fluid mr-4">
+                        <div class="media-body">
+                            <h2 class="tm-color-primary tm-post-title mb-2">{{n.name}}</h2>
+                            <h3 class="tm-h3 mb-3">{{n.profession}}</h3>
+                            <p class="mb-0 tm-line-height-short">
+                                {{n.small_inf}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+            </div>        
+            <footer class="row tm-row">
+                <hr class="col-12">
+                <div class="col-md-6 col-12 tm-color-gray">
+                    Design: <a rel="nofollow" target="_parent" href="https://templatemo.com" class="tm-external-link">TemplateMo</a>
+                </div>
+                <div class="col-md-6 col-12 tm-color-gray tm-copyright">
+                    Copyright 2020 Xtra Blog Company Co. Ltd.
+                </div>
+            </footer>
+            </main>
+            </div>
+            <script src="{% static 'chat_asserts/js/jquery.min.js'%}"></script>
+            <script src="{% static 'chat_asserts/js/templatemo-script.js'%}"></script>
+            </body>
+            {%endblock%}

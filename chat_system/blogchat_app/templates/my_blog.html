@@ -1,0 +1,67 @@
+{%extends 'base.html' %}
+{% load static %}
+{%block content%}
+
+            <div class="row tm-row">
+                {%for post in my_blog_queryset%}
+                <article class="col-12 col-md-6 tm-post">
+                    <hr class="tm-hr-primary">
+                    <a href="{% url 'detail_page' post_id=post.id %}" class="effect-lily tm-post-link tm-pt-60">
+                        <div class="tm-post-link-inner">
+                            <img src="{{post.image.url}}" alt="Image" class="img-fluid">                            
+                        </div>
+                        <span class="position-absolute tm-new-badge">New</span>
+                        <!-- <h2  href="{% url 'detail_page' post_id=post.id %}" class="tm-pt-30 tm-color-primary tm-post-title">{{post.title}}</h2> -->
+                        <a href="{% url 'detail_page' post_id=post.id %}"><h2 class="tm-pt-30 tm-color-primary tm-post-title">{{post.title}}</h2></a>
+                    </a>                    
+                    <p class="tm-pt-30">
+                        {{post.text|truncatechars:20}}
+                    </p>
+                    <div class="d-flex justify-content-between tm-pt-45">
+                        <span class="tm-color-primary">{{post.category}}</span>
+                        <span class="tm-color-primary">{{post.date}}</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        {%if post.comments.count == 1%}
+                        <span>comments</span>
+                        {%elif post.comments.count == 0%}
+                        <span> No comments</span>
+                        {%else%}
+                        <span> {{post.comments.count}} comments</span>
+                        {%endif%}
+                        <span>by {{post.username}}</span>
+                    </div>
+                </article>
+                <td>
+                     <small><a href="{% url 'update_post' post.pk %}"> 
+ 		  Edit </a></small>
+                <a href="/delete/{{ post.id }}"class="pt-2 tm-mb-40 tm-color-primary tm-post-title">Delete</a>
+                </td>
+                {%endfor%}
+            </div>
+            <div class="row tm-row tm-mt-100 tm-mb-75">
+                <div class="tm-prev-next-wrapper">
+                    {%if page_obj.has_previous %} 
+                    <a href="?page={{page_obj.previous_page_number}}" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
+                    {% endif %}                    
+                    {%if page_obj.has_next %}                    
+                    <a href="?page={{page_obj.next_page_number}}" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
+                    {% endif %}                
+                </div>
+                <div class="tm-paging-wrapper">
+                    <span class="d-inline-block mr-3">Page</span>
+                    <nav class="tm-paging-nav d-inline-block">
+                        <ul>
+                            <li class="tm-paging-item active">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">{{page_obj.number}}</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>                
+            </div>
+            <a href="http://localhost:8000/archive" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Archive</a>
+            </html>
+           
+</html>
+{%endblock%}
